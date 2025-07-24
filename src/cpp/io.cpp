@@ -1,6 +1,16 @@
 #include <io.hpp>
 #include <logging.hpp>
 
+#ifdef _WIN32
+#include <windows.h>
+#elif __APPLE__ || __MACH__
+#include <mach-o/dyld.h>
+    #include <string>
+#elif __linux__
+    #include <unistd.h>
+    #include <limits.h> // For PATH_MAX
+#endif
+
 void save_map(GameMap const& map, std::string const& filename)
 {
     std::ofstream mapfile(filename, std::ios::binary | std::ios::out);
@@ -64,4 +74,65 @@ GameMap load_map(std::string const& filename)
     mapfile.close();
 
     return map;
+}
+
+std::string get_initial_path()
+{
+#ifdef _WIN32
+    char buffer[MAX_PATH];
+    GetModuleFileNameA(nullptr, buffer, MAX_PATH);
+    return buffer;
+#elif __APPLE__ || __MACH__
+    uint32_t bufferSize = PATH_MAX;
+        std::vector<char> buffer(bufferSize);
+        if (_NSGetExecutablePath(buffer.data(), &bufferSize) == 0) {
+            return buffer.data();
+        } else {
+            buffer.resize(bufferSize); // Resize if necessary
+            _NSGetExecutablePath(buffer.data(), &bufferSize);
+            return buffer.data();
+        }
+    #elif __linux__
+        char buffer[PATH_MAX];
+        ssize_t len = readlink("/proc/self/exe", buffer, sizeof(buffer) - 1);
+        if (len != -1) {
+            buffer[len] = '\0';
+            return buffer;
+        }
+#endif
+
+    return ""; // Handle error
+}
+
+SDL_Texture* load_sprite(std::string const& filename, SDL_Renderer* renderer)
+{
+    std::string str_path = get_initial_path();
+
+    fs::path initial_path(str_path);
+    fs::path directory_path = initial_path.parent_path();
+
+    fs::path assets_sprites_path = fs::path("assets") / fs::path("sprites");
+
+    fs::path full_assets_sprites_path = directory_path / assets_sprites_path;
+
+    return load_media((full_assets_sprites_path / std::filesystem::path(filename)).string(), renderer);
+}
+
+std::string get_full_music_file_path(std::string const& filename)
+{
+    std::string str_path = get_initial_path();
+
+    fs::path initial_path(str_path);
+    fs::path directory_path = initial_path.parent_path();
+
+    fs::path assets_music_path = fs::path("assets") / fs::path("music");
+
+    fs::path full_assets_music_path = directory_path / assets_music_path;
+
+    return (full_assets_music_path / std::filesystem::path(filename)).string();
+}
+
+std::string get_full_sound_file_path(std::string const& filename)
+{
+    return get_full_music_file_path(filename);
 }

@@ -4,7 +4,8 @@
 namespace {
     Mix_Music* load_music(std::string const& filename)
     {
-        auto* music = Mix_LoadMUS(filename.c_str());
+        std::string filepath = get_full_music_file_path(filename);
+        auto* music = Mix_LoadMUS(filepath.c_str());
         if (!music) {
             warn("Unable to load music (filename="s + filename + ": "s + Mix_GetError());
         }
@@ -13,7 +14,8 @@ namespace {
 
     Mix_Chunk* load_sound(std::string const& filename)
     {
-        auto* sound = Mix_LoadWAV(filename.c_str());
+        std::string filepath = get_full_sound_file_path(filename);
+        auto* sound = Mix_LoadWAV(filepath.c_str());
         if (!sound) {
             warn("Unable to load sound (filename="s + filename + ": "s + Mix_GetError());
         }
@@ -79,10 +81,10 @@ void SoundHandler::load()
 {
     using namespace std::string_literals;
     for (auto const& filename : {"title_screen"s, "forest"s}) {
-        this->music_registry[filename] = load_music("assets/music/"s + filename + ".ogg"s);
+        this->music_registry[filename] = load_music(filename + ".ogg"s);
     }
     for (auto const& filename : {"hit"s}) {
-        this->sound_registry[filename] = load_sound("assets/music/"s + filename + ".ogg"s);
+        this->sound_registry[filename] = load_sound(filename + ".ogg"s);
     }
 }
 

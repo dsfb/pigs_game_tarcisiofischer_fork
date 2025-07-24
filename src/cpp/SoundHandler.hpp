@@ -1,6 +1,7 @@
 #ifndef PIGSGAME_SOUNDHANDLER_HPP
 #define PIGSGAME_SOUNDHANDLER_HPP
 
+#include <io.hpp>
 #include <SDL_mixer.h>
 #include <unordered_map>
 #include <string>

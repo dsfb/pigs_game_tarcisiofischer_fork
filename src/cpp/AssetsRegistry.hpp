@@ -1,8 +1,8 @@
 #ifndef __ASSETS_REGISTRY_H
 #define __ASSETS_REGISTRY_H
 
+#include <io.hpp>
 #include <SDL2/SDL.h>
-
 #include <sdl_wrappers.hpp>
 
 struct AssetsRegistry {
