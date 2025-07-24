@@ -76,7 +76,7 @@ GameMap load_map(std::string const& filename)
     return map;
 }
 
-std::string get_initial_path()
+std::string get_executable_game_path()
 {
 #ifdef _WIN32
     char buffer[MAX_PATH];
@@ -106,28 +106,28 @@ std::string get_initial_path()
 
 SDL_Texture* load_sprite(std::string const& filename, SDL_Renderer* renderer)
 {
-    std::string str_path = get_initial_path();
+    std::string str_executable_game_path = get_executable_game_path();
 
-    fs::path initial_path(str_path);
-    fs::path directory_path = initial_path.parent_path();
+    fs::path executable_game_path(str_executable_game_path);
+    fs::path executable_game_directory_path = executable_game_path.parent_path();
 
     fs::path assets_sprites_path = fs::path("assets") / fs::path("sprites");
 
-    fs::path full_assets_sprites_path = directory_path / assets_sprites_path;
+    fs::path full_assets_sprites_path = executable_game_directory_path / assets_sprites_path;
 
     return load_media((full_assets_sprites_path / std::filesystem::path(filename)).string(), renderer);
 }
 
 std::string get_full_music_file_path(std::string const& filename)
 {
-    std::string str_path = get_initial_path();
+    std::string str_executable_game_path = get_executable_game_path();
 
-    fs::path initial_path(str_path);
-    fs::path directory_path = initial_path.parent_path();
+    fs::path executable_game_path(str_executable_game_path);
+    fs::path executable_game_directory_path = executable_game_path.parent_path();
 
     fs::path assets_music_path = fs::path("assets") / fs::path("music");
 
-    fs::path full_assets_music_path = directory_path / assets_music_path;
+    fs::path full_assets_music_path = executable_game_directory_path / assets_music_path;
 
     return (full_assets_music_path / std::filesystem::path(filename)).string();
 }

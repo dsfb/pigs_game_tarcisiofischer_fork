@@ -1,5 +1,4 @@
 #include <AssetsRegistry.hpp>
-#include <iostream>
 
 void AssetsRegistry::load(SDL_Renderer* renderer)
 {
