@@ -2,12 +2,12 @@
 
 void AssetsRegistry::load(SDL_Renderer* renderer)
 {
-    this->tileset = load_media("assets/sprites/tiles.png", renderer);
-    this->lifebar = load_media("assets/sprites/lifebar.png", renderer);
-    this->lifebar_heart = load_media("assets/sprites/small_heart18x14.png", renderer);
-    this->monogram = load_media("assets/sprites/monogram.png", renderer);
-    this->talk_baloon = load_media("assets/sprites/talk_baloon.png", renderer);
-    this->forest_background = load_media("assets/sprites/forest_background.png", renderer);
+    this->tileset = load_sprite("tiles.png", renderer);
+    this->lifebar = load_sprite("lifebar.png", renderer);
+    this->lifebar_heart = load_sprite("small_heart18x14.png", renderer);
+    this->monogram = load_sprite("monogram.png", renderer);
+    this->talk_baloon = load_sprite("talk_baloon.png", renderer);
+    this->forest_background = load_sprite("forest_background.png", renderer);
 }
 
 AssetsRegistry::~AssetsRegistry()

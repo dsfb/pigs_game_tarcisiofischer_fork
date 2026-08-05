@@ -9,7 +9,11 @@
 #include <SoundHandler.hpp>
 
 EntryLevel::EntryLevel(GameHandler& game_handler)
-    : map(load_map("maps/entry_level.map"))
+    : map(load_map((
+        get_maps_directory()
+        / "entry_level.map"
+        ).string()
+    ))
     , characters(build_game_characters(game_handler.get_renderer(), map))
     , game_handler(game_handler)
 {

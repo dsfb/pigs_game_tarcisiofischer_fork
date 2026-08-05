@@ -1,5 +1,6 @@
 #include <SoundHandler.hpp>
 #include <logging.hpp>
+#include <sdl_wrappers.hpp>
 
 namespace {
     Mix_Music* load_music(std::string const& filename)
@@ -78,11 +79,21 @@ void SoundHandler::play(std::string const& sound_name)
 void SoundHandler::load()
 {
     using namespace std::string_literals;
-    for (auto const& filename : {"title_screen"s, "forest"s}) {
-        this->music_registry[filename] = load_music("assets/music/"s + filename + ".ogg"s);
+    for (auto const& filename : {"title_screen", "forest"}) {
+        fs::path music_file_path =
+            get_assets_directory()
+            / "music"
+            / filename;
+        music_file_path.replace_extension(".ogg");
+        this->music_registry[filename] = load_music(music_file_path.string());
     }
-    for (auto const& filename : {"hit"s}) {
-        this->sound_registry[filename] = load_sound("assets/music/"s + filename + ".ogg"s);
+    for (auto const& filename : {"hit"}) {
+        fs::path sound_file_path =
+            get_assets_directory()
+            / "music"
+            / filename;
+        sound_file_path.replace_extension(".ogg");
+        this->sound_registry[filename] = load_sound(sound_file_path.string());
     }
 }
 

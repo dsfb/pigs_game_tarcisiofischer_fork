@@ -101,6 +101,7 @@ void GameHandler::render()
     if (this->transition_animation.current_state() != TransitionAnimationState::finished) {
         this->transition_animation.run(this->renderer, elapsed_time);
     }
+
     SDL_RenderPresent(this->renderer);
 }
 

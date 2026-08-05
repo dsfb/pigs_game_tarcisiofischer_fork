@@ -3,7 +3,7 @@
 Key::Key(SDL_Renderer* renderer, double pos_x, double pos_y)
         : position { pos_x, pos_y }
         , renderer(renderer)
-        , spritesheet(load_media("assets/sprites/key.png", renderer))
+        , spritesheet(load_sprite("key.png", renderer))
         , is_collected(false)
 {
     auto register_animation = [&](int id, std::vector<std::tuple<int, int>> const& frames, double time) {

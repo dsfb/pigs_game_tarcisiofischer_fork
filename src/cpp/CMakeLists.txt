@@ -8,11 +8,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(SOURCE_FILES
     main.cpp
 
-    bitmap_font.hpp
-    constants.hpp
-    drawing.cpp
-    drawing.hpp
-
     characters/builder.cpp
     characters/builder.hpp
     characters/IGameCharacter.hpp
@@ -133,13 +128,38 @@ set_target_properties(PigsGame
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../FreeMono.ttf DESTINATION ${CMAKE_BINARY_DIR}/bin/FreeMono.ttf)
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../assets/ DESTINATION ${CMAKE_BINARY_DIR}/bin/assets/)
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../maps/ DESTINATION ${CMAKE_BINARY_DIR}/bin/maps/)
+
+add_custom_command(
+    TARGET PigsGame
+    POST_BUILD
+
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../assets"
+        "$<TARGET_FILE_DIR:PigsGame>/assets"
+
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../maps"
+        "$<TARGET_FILE_DIR:PigsGame>/maps"
+
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../FreeMono.ttf"
+        "$<TARGET_FILE_DIR:PigsGame>/FreeMono.ttf"
+)
 
 set_target_properties(MapEditor
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tools"
 )
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../FreeMono.ttf DESTINATION ${CMAKE_BINARY_DIR}/tools/FreeMono.ttf)
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../assets/ DESTINATION ${CMAKE_BINARY_DIR}/tools/assets/)
+
+add_custom_command(
+    TARGET MapEditor
+    POST_BUILD
+
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../assets"
+        "$<TARGET_FILE_DIR:MapEditor>/assets"
+
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../FreeMono.ttf"
+        "$<TARGET_FILE_DIR:MapEditor>/FreeMono.ttf"
+)
