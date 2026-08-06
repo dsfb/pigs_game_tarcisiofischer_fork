@@ -30,8 +30,8 @@ public:
             0.0 }
         , state(CannonBallState::active)
         , renderer(renderer)
-        , spritesheet(load_media("assets/sprites/cannonball44x28.png", renderer))
-        , boom_spritesheet(load_media("assets/sprites/boom80x80.png", renderer))
+        , spritesheet(load_sprite("cannonball44x28.png", renderer))
+        , boom_spritesheet(load_sprite("boom80x80.png", renderer))
     {
         auto register_animation = [&](int id, std::vector<std::tuple<int, int>> const& frames, double time) {
             this->animations.insert(std::make_pair(id, Animation(this->spritesheet, frames, Vector2D<int> { 20, 0 }, 44, 28, time)));

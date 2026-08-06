@@ -9,7 +9,7 @@ Pig::Pig(SDL_Renderer* renderer, double pos_x, double pos_y)
     , old_position { pos_x, pos_y }
     , velocity { 0.0, 0.0 }
     , renderer(renderer)
-    , spritesheet(load_media("assets/sprites/pig80x80.png", renderer))
+    , spritesheet(load_sprite("pig80x80.png", renderer))
     , think_timeout(1000.)
     , is_taking_damage(false)
     , life(2)

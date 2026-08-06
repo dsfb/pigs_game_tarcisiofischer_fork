@@ -5,9 +5,15 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
+#include <filesystem>
 #include <string>
 
-SDL_Texture* load_media(std::string const& filename, SDL_Renderer* renderer);
+namespace fs = std::filesystem;
+
+SDL_Texture* load_sprite(std::string const& filename, SDL_Renderer* renderer);
+SDL_Texture* load_map_editor_sprite(std::string const& filename, SDL_Renderer* renderer);
+fs::path get_assets_directory();
+fs::path get_maps_directory();
 
 struct SDL_Handler
 {

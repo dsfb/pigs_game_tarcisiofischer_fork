@@ -11,8 +11,8 @@ Liv::Liv(SDL_Renderer* renderer, double pos_x, double pos_y)
     , position { pos_x, pos_y }
     , velocity { 0.0, 0.0 }
     , renderer(renderer)
-    , spritesheet(load_media("assets/sprites/liv23x26.png", renderer))
-    , jump_spritesheet(load_media("assets/sprites/jump-smoke.png", renderer))
+    , spritesheet(load_sprite("liv23x26.png", renderer))
+    , jump_spritesheet(load_sprite("jump-smoke.png", renderer))
     , is_jumping(false)
     , is_falling(true)
     , start_jumping(false)

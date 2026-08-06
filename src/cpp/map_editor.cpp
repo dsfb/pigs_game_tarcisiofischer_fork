@@ -93,7 +93,7 @@ public:
         : color(color)
         , sdl_renderer(renderer)
     {
-        this->sdl_image = load_media(filename, this->sdl_renderer);
+        this->sdl_image = load_map_editor_sprite(filename, this->sdl_renderer);
         this->region = Region2D<int> { position.x, position.y, size.x, size.y };
         this->sdl_region = to_sdl_rect(this->region);
     }
@@ -187,25 +187,25 @@ public:
         this->camera_offset.y = 0;
 
         auto load_spritesheet = [this](std::string const& filename) {
-            return load_media("assets/sprites/" + filename, this->sdl_renderer);
+            return load_sprite(filename, this->sdl_renderer);
         };
         this->tileset = load_spritesheet("tiles.png");
-        this->interactables_set = load_media("assets/map_editor/interactables.png", this->sdl_renderer);
+        this->interactables_set = load_map_editor_sprite("interactables.png", this->sdl_renderer);
         this->monogram = load_spritesheet("monogram.png");
 
-        this->new_button = Button(this->sdl_renderer, { 20, 5 }, { 22, 22 }, GRAY_COLOR, "assets/map_editor/new.png");
+        this->new_button = Button(this->sdl_renderer, { 20, 5 }, { 22, 22 }, GRAY_COLOR, "new.png");
         this->new_button.register_on_mouse_in(
             [this](Button& self, MouseState const& mouse) { self.set_color(LIGHT_GRAY_COLOR); });
         this->new_button.register_on_mouse_out(
             [this](Button& self, MouseState const& mouse) { self.set_color(GRAY_COLOR); });
 
-        this->load_button = Button(this->sdl_renderer, { 44, 5 }, { 22, 22 }, GRAY_COLOR, "assets/map_editor/load.png");
+        this->load_button = Button(this->sdl_renderer, { 44, 5 }, { 22, 22 }, GRAY_COLOR, "load.png");
         this->load_button.register_on_mouse_in(
             [this](Button& self, MouseState const& mouse) { self.set_color(LIGHT_GRAY_COLOR); });
         this->load_button.register_on_mouse_out(
             [this](Button& self, MouseState const& mouse) { self.set_color(GRAY_COLOR); });
 
-        this->save_button = Button(this->sdl_renderer, { 68, 5 }, { 22, 22 }, GRAY_COLOR, "assets/map_editor/save.png");
+        this->save_button = Button(this->sdl_renderer, { 68, 5 }, { 22, 22 }, GRAY_COLOR, "save.png");
         this->save_button.register_on_mouse_in(
             [this](Button& self, MouseState const& mouse) { self.set_color(LIGHT_GRAY_COLOR); });
         this->save_button.register_on_mouse_out(
@@ -215,14 +215,14 @@ public:
             this->bottom_panel_message = "Map saved in " + this->map_filename;
         });
 
-        this->tm0 = Button(this->sdl_renderer, { 20, 460 }, { 14, 14 }, PURPLE_COLOR, "assets/map_editor/tm0.png");
+        this->tm0 = Button(this->sdl_renderer, { 20, 460 }, { 14, 14 }, PURPLE_COLOR, "tm0.png");
         this->tm0.register_on_mouse_clicked(
             [this](Button&, MouseState const&) { this->selected_section = BACKGROUND_SECTION; });
-        this->tmI = Button(this->sdl_renderer, { 52, 460 }, { 14, 14 }, PURPLE_COLOR, "assets/map_editor/tmI.png");
+        this->tmI = Button(this->sdl_renderer, { 52, 460 }, { 14, 14 }, PURPLE_COLOR, "tmI.png");
         this->tmI.register_on_mouse_clicked(
             [this](Button&, MouseState const&) { this->selected_section = INTERACTABLES_SECTION; });
 
-        this->fill_all_button = Button(this->sdl_renderer, { 134, 460 }, { 14, 14 }, PURPLE_COLOR, "assets/map_editor/fill_all.png");
+        this->fill_all_button = Button(this->sdl_renderer, { 134, 460 }, { 14, 14 }, PURPLE_COLOR, "fill_all.png");
         this->fill_all_button.register_on_mouse_clicked([this](Button&, MouseState const&) {
             if (mouse.just_left_clicked && this->selected_tile != -1 && this->selected_section == BACKGROUND_SECTION) {
                 auto* selected_tilemap = &this->map.tilemap;
@@ -235,13 +235,13 @@ public:
         });
 
         this->start_tile_id = 0;
-        this->left_arrow_button = Button(this->sdl_renderer, { 152, 460 }, { 14, 14 }, PURPLE_COLOR, "assets/map_editor/left_arrow.png");
+        this->left_arrow_button = Button(this->sdl_renderer, { 152, 460 }, { 14, 14 }, PURPLE_COLOR, "left_arrow.png");
         this->left_arrow_button.register_on_mouse_clicked([this](Button&, MouseState const&) {
             if (this->start_tile_id > 0) {
                 this->start_tile_id -= 1;
             }
         });
-        this->right_arrow_button = Button(this->sdl_renderer, { 168, 460 }, { 14, 14 }, PURPLE_COLOR, "assets/map_editor/right_arrow.png");
+        this->right_arrow_button = Button(this->sdl_renderer, { 168, 460 }, { 14, 14 }, PURPLE_COLOR, "right_arrow.png");
         this->right_arrow_button.register_on_mouse_clicked(
             [this](Button&, MouseState const&) { this->start_tile_id += 1; });
     }

@@ -6,7 +6,7 @@ PigWithMatches::PigWithMatches(SDL_Renderer* renderer, double pos_x, double pos_
     , old_position { pos_x, pos_y }
     , velocity { 0.0, 0.0 }
     , renderer(renderer)
-    , spritesheet(load_media("assets/sprites/pig_with_match96x96.png", renderer))
+    , spritesheet(load_sprite("pig_with_match96x96.png", renderer))
     , think_timeout(PigWithMatches::DEFAULT_THINK_TIMEOUT)
     , start_attack(false)
     , preparing_next_match(false)
