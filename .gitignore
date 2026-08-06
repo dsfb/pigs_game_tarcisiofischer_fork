@@ -13,3 +13,4 @@ PigsGame
 MapEditor
 compile_commands.json
 cmake-build-*/
+.cache/

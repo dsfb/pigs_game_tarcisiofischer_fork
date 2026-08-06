@@ -5,6 +5,7 @@
 #include <collision/aabb.hpp>
 #include <constants.hpp>
 #include <drawing.hpp>
+#include <algorithm>
 #include <functional>
 #include <io.hpp>
 #include <iostream>

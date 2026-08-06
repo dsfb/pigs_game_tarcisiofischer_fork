@@ -5,6 +5,8 @@
 #include <items/Key.hpp>
 #include <collision/character_collision.hpp>
 
+#include <algorithm>
+
 void pig_liv_collision(Pig* pig_ptr, Liv* liv_ptr)
 {
     auto& player = *liv_ptr;
