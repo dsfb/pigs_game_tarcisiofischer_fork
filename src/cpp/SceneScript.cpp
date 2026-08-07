@@ -137,33 +137,3 @@ void RunLambdaEvent::run(IGameCharacter* c, SceneScript* script, double elapsed_
     this->lambda_f();
     this->finished = true;
 }
-
-SceneScript::SceneScript(std::vector<ScriptLine> const& script)
-    : full_script(std::move(script))
-    , active_script_line(0)
-{
-}
-
-void SceneScript::run(IGameCharacter* c, double elapsed_time)
-{
-    if (this->active_script_line >= this->full_script.size()) {
-        return;
-    }
-
-    auto& [i, action] = this->full_script.at(active_script_line);
-    action->run(c, this, elapsed_time);
-    if (action->is_finished()) {
-        this->active_script_line += 1;
-    }
-}
-
-int SceneScript::get_active_script_line() const
-{
-    try {
-        auto const& [i, _] = this->full_script.at(this->active_script_line);
-        return i;
-    } catch (std::out_of_range const&) {
-        auto const& [i, _] = this->full_script.at(this->active_script_line - 1);
-        return i + 1;
-    }
-}

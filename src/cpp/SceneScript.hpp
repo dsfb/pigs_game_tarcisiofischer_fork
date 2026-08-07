@@ -106,17 +106,4 @@ private:
     std::function<void()> lambda_f;
 };
 
-class SceneScript {
-public:
-    using ScriptLine = std::tuple<int, std::shared_ptr<AbstractSceneHandler>>;
-
-    SceneScript(std::vector<ScriptLine> const& script);
-    void run(IGameCharacter* c, double elapsed_time);
-    int get_active_script_line() const;
-
-private:
-    std::vector<ScriptLine> full_script;
-    int active_script_line;
-};
-
 #endif
