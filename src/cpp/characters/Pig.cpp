@@ -131,11 +131,6 @@ void Pig::set_position(double x, double y)
     this->position.y = y;
 }
 
-void Pig::set_script(SceneScript&& s)
-{
-    this->script = std::move(s);
-}
-
 Vector2D<double> Pig::get_position() const
 {
     return this->position;
@@ -338,37 +333,28 @@ void Pig::set_fear(bool fear)
 
 void Pig::think(double elapsed_time)
 {
-    if (this->script) {
-        (*this->script).run(this, elapsed_time);
-    } else {
-        this->think_timeout -= elapsed_time;
-        if (this->think_timeout <= 0.) {
-            switch (random_int(0, 2)) {
-            case 0: {
-                this->run_left();
-                break;
-            };
-            case 1: {
-                this->stop();
-                break;
-            };
-            case 2: {
-                this->run_right();
-                break;
-            };
-            }
-            this->think_timeout = 1000.;
+    this->think_timeout -= elapsed_time;
+    if (this->think_timeout <= 0.) {
+        switch (random_int(0, 2)) {
+        case 0: {
+            this->run_left();
+            break;
+        };
+        case 1: {
+            this->stop();
+            break;
+        };
+        case 2: {
+            this->run_right();
+            break;
+        };
         }
+        this->think_timeout = 1000.;
     }
 }
 
 int Pig::get_dynamic_property(int property_id) const
 {
-    if (property_id == SceneScriptLinePropertyId) {
-        if (this->script) {
-            return this->script->get_active_script_line();
-        }
-    }
     err("Unknown Pig property with property_id="s + std::to_string(property_id));
     return -1;
 }

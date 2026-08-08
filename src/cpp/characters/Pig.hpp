@@ -2,7 +2,6 @@
 #define __PIG_HPP
 
 #include <Animation.hpp>
-#include <SceneScript.hpp>
 #include <Vector2D.hpp>
 #include <characters/IGameCharacter.hpp>
 #include <random.hpp>
@@ -32,7 +31,6 @@ public:
 
     virtual ~Pig();
 
-    void set_script(SceneScript&& s);
     void set_position(double x, double y) override;
     Vector2D<double> get_position() const override;
     Vector2D<double> get_velocity() const override;
@@ -77,7 +75,6 @@ public:
     RGBColor talk_color;
 
     std::optional<std::function<void()>> on_start_taking_damage;
-    std::optional<SceneScript> script;
     std::vector<std::function<void(int)>> post_animations;
 };
 
