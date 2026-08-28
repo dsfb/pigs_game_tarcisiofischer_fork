@@ -64,6 +64,7 @@ public:
     StateTimeout after_taking_damage_timeout;
     int face;
     int life;
+    Vector2D<double> initial_position;
     Vector2D<double> old_position;
     Vector2D<double> position;
     Vector2D<double> velocity;

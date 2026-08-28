@@ -171,8 +171,11 @@ void GameScreen::set_active_level(std::unique_ptr<IGameLevel>&& lvl)
         auto& transition_animation = this->game_handler.get_transition_animation();
         transition_animation.register_transition_callback([this]() {
             auto player = this->player();
-            player->set_position(100.0, 100.0);
-            player->life = 2;
+            player->set_position(player->initial_position.x, player->initial_position.y);
+            player->life = 3;
+            player->set_velocity(0.0, 0.0);
+            player->face = +1;
+            player->running_side = 0;
             player->is_dead = false;
         });
         transition_animation.reset();

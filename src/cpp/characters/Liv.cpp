@@ -6,7 +6,8 @@ Liv::Liv(SDL_Renderer* renderer, double pos_x, double pos_y)
     , animations()
     , after_taking_damage_timeout()
     , face(+1)
-    , life(2)
+    , life(3)
+    , initial_position { pos_x, pos_y }
     , old_position { pos_x, pos_y }
     , position { pos_x, pos_y }
     , velocity { 0.0, 0.0 }
